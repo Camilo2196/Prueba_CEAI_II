@@ -39,3 +39,4 @@ export function grafcet(L,rt,get,set,dt){const g=L.g,n=a=>a=='T'?rt.gT:get(a);rt
  if(gp&&run(gp,n)){rt.act=Math.max(0,Math.min(g.length-1,+g[rt.act].n));rt.gT=0}
  const lv=new Set();g.forEach(s=>acts(s.a).forEach(x=>{if(!x.bad&&!x.tm&&x.v==null&&!x.m)lv.add(x.a)}));lv.forEach(a=>set(a,0));
  g.forEach((s,i)=>acts(s.a).forEach(x=>{if(x.bad)return;if(x.tm)tim('TON',x.a,x.v,i==rt.act?1:0,0,rt,set,dt);else if(i==rt.act){if(x.v!=null)set(x.a,x.v);else set(x.a,x.m=='R'?0:1)}}))}
+  
