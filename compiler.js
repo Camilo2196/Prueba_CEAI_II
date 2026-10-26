@@ -1,4 +1,3 @@
-// Analizador de expresiones, parser Ladder y compilador estático.
 function tok(s){const r=[],re=/\s*(&&|\|\||>=|<=|==|!=|[()!<>]|\d+(?:\.\d+)?|[A-Za-z_][\w:.\/]*)/y;
  while(re.lastIndex<s.length){const at=re.lastIndex;if(/^\s*$/.test(s.slice(at)))break;const m=re.exec(s);if(!m)throw Error('Carácter no válido cerca de "'+s.slice(at,at+8).trim()+'"');r.push(m[1])}return r}
 export function parse(s){const t=tok(String(s));let i=0;
@@ -59,7 +58,7 @@ export function compile({ladder,g,HW,ip,mode,pid,hmi=[],vt=[]}){
         case 'CALL': if(!ladder[a]) bad(a,`La subrutina ${a} no existe.`); break;
         case'OUT':wr(a);if(all.has(a)&&!ro.has(a)){if(used[a]!=null)e('warn',w,a,'Bobina duplicada',r.i);used[a]=r.n}break;
         case'S':case'R':wr(a);break;
-        case'TON':case'TOF':case'TP':case'CTU':case'CTD':if(!(r.ct[0]=='C'?/^C\d+$/:/^T\d+$/).test(a))bad(a,'Nombre inválido: use T1, T2… (temporizadores) o C1, C2… (contadores)');if(!num(b)||+b<0)bad(b,'El preset debe ser un número positivo');break;
+        case'TON':case'TOF':case'TP':case'CTU':case'CTD':if(!(r.ct[0]=='C'?/^C\d+$/:/^T\d+$/).test(a))bad(a,'Nombre inválido: use T1, T2… o C1, C2…');if(!num(b)||+b<0)bad(b,'El preset debe ser un número positivo');break;
         case'RES':if(!dec.has(a))bad(a,'El temporizador o contador no está definido en el programa');break;
         case'MOVE':rd(a);wr(b);break;case'ADD':case'SUB':rd(a);rd(b);wr(c)}})
   });
@@ -71,3 +70,4 @@ export function compile({ladder,g,HW,ip,mode,pid,hmi=[],vt=[]}){
    if(!(s.n>=0&&s.n<g.length))e('err',w,'Salta a '+s.n,'La etapa destino no existe');
    acts(s.a).forEach(x=>{if(x.bad)return e('err',w,x.bad,'Acción con sintaxis incorrecta');if(x.tm)return;if(!W(x.a))e('err',w,x.a,'La dirección '+x.a+' no existe.');else if(ro.has(x.a))e('err',w,x.a,'Una entrada no puede ser una acción')})})}
  return{list:R,err:R.filter(r=>r.sev=='err').length,warn:R.filter(r=>r.sev=='warn').length,dec:[...dec]}}
+                              
