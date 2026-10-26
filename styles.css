@@ -1,0 +1,349 @@
+:root {
+  /* Nueva paleta de colores SENA - Tema Claro */
+  --bg: #ffffff;          /* Fondo blanco principal */
+  --pn: #f4f5f7;          /* Paneles gris claro */
+  --ln: #cccccc;          /* Líneas separadoras y bordes */
+  --cy: #39A900;          /* Verde SENA (Acento primario y botones) */
+  --am: #FF6A00;          /* Naranja SENA (Advertencias y acentos secundarios) */
+  --tx: #333333;          /* Texto principal oscuro */
+  --mu: #666666;          /* Texto secundario/mutado */
+  --rd: #E2001A;          /* Rojo (Errores, paradas, alarmas críticas) */
+  --ok: #39A900;          /* Verde (RUN, estados OK, éxito) */
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 120px; }
+
+body {
+  margin: 0;
+  background: var(--bg) radial-gradient(circle at 80% -10%, #e8f5e9 0, transparent 45%);
+  color: var(--tx);
+  font: 15px/1.5 "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  background-image: linear-gradient(#eaeaea 1px, transparent 1px), linear-gradient(90deg, #eaeaea 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  padding: 10px 24px;
+  background: #ffffffF2;
+  border-bottom: 1px solid var(--ln);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+h1 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--cy);
+  letter-spacing: .04em;
+  font-weight: 700;
+}
+
+h2 { font-size: 24px; margin: 8px 0 16px; color: #222222; }
+h3 { font-size: 16px; color: var(--cy); margin: 14px 0 8px; }
+
+nav, #runbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#runbar { margin-left: auto; }
+
+button, select, input, textarea {
+  font: inherit;
+  color: var(--tx);
+  background: #ffffff;
+  border: 1px solid var(--ln);
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+button {
+  cursor: pointer;
+  /* Se eliminó el clip-path futurista para un diseño más limpio e institucional */
+  font-weight: 600;
+}
+
+button:hover, button.on, nav button.act {
+  border-color: var(--cy);
+  color: #ffffff;
+  background: var(--cy);
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--am);
+  outline-offset: 2px;
+}
+
+.go.run { background: #ffebee; border-color: var(--rd); color: var(--rd); }
+.go.run:hover { background: var(--rd); color: #ffffff; }
+
+#led { width: 12px; height: 12px; border-radius: 50%; background: #e0e0e0; }
+#led.on { background: var(--ok); box-shadow: 0 0 12px rgba(57, 169, 0, 0.5); }
+
+main { padding: 16px 24px 60px; max-width: 1400px; margin: auto; }
+section { display: none; }
+section.act { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+.panel, .card {
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.card h3 { margin-top: 0; }
+.card p { margin: .4em 0 1em; }
+.card ul { padding-left: 18px; margin: 0 0 12px; color: var(--mu); }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.two.wide { grid-template-columns: 1.5fr 1fr; }
+
+@media(max-width:900px) {
+  .two, .two.wide { grid-template-columns: 1fr; }
+  header { padding: 10px 12px; }
+  main { padding: 12px; }
+}
+
+label { display: block; margin: 0 0 10px; color: var(--mu); font-weight: 500; }
+label input, label select { display: block; width: 100%; margin-top: 4px; color: var(--tx); }
+
+.mut { color: var(--mu); }
+code { color: var(--am); font-weight: bold; background: #fff3e0; padding: 2px 4px; border-radius: 3px; }
+#ipmsg.ok { color: var(--ok); font-weight: bold; }
+#ipmsg.err { color: var(--rd); font-weight: bold; }
+
+.ios { display: flex; flex-wrap: wrap; gap: 6px; }
+.di, .do, .aq {
+  min-width: 46px;
+  text-align: center;
+  padding: 4px 8px;
+  border: 1px solid var(--ln);
+  background: #ffffff;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.di.on { background: #fff3e0; border-color: var(--am); color: var(--am); }
+.do.on { background: #e8f5e9; border-color: var(--ok); color: var(--ok); box-shadow: 0 0 8px rgba(57, 169, 0, 0.3); }
+
+.ai { display: grid; grid-template-columns: 34px 1fr 34px; gap: 6px; align-items: center; width: 100%; margin: 0; }
+.ai input { padding: 0; margin: 0; }
+
+.aq { position: relative; overflow: hidden; min-width: 110px; }
+.aq i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(57, 169, 0, 0.2); }
+
+table { border-collapse: collapse; width: 100%; background: #ffffff; }
+th, td { border: 1px solid var(--ln); padding: 6px 10px; text-align: left; }
+th { background: #f0f0f0; color: var(--tx); }
+td input { width: 100%; padding: 3px 6px; }
+
+#lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
+#lib .sym { background: var(--pn); border: 1px solid var(--ln); padding: 8px; text-align: center; font-size: 13px; }
+#lib h3 { grid-column: 1/-1; margin: 8px 0 0; }
+
+svg { max-width: 100%; }
+svg .s, .sym svg, .pal svg { stroke: var(--tx); fill: none; stroke-width: 2; }
+svg text { fill: var(--tx); stroke: none; font: 600 10px "Chakra Petch", sans-serif; }
+
+.lines line { stroke: var(--tx); stroke-width: 2; }
+.lines text { font-size: 12px; }
+
+.pal { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.pal button { padding: 4px 8px; display: flex; align-items: center; gap: 4px; font-size: 12px; background: #ffffff; color: var(--tx); }
+.pal button:hover { background: var(--cy); color: #ffffff; }
+.pal svg { width: 26px; height: 26px; }
+.pal button:hover svg .s { stroke: #ffffff; }
+
+#cv, #hcv { width: 100%; background: #ffffff; border: 1px solid var(--ln); touch-action: none; border-radius: 6px; }
+.it { cursor: grab; }
+.it .tag { font-size: 8px; fill: var(--mu); }
+.it.sel .s { stroke: var(--am); }
+.it.on .s { stroke: var(--ok); filter: drop-shadow(0 0 3px rgba(57, 169, 0, 0.4)); }
+
+.liq { fill: rgba(57, 169, 0, 0.3) !important; stroke: none !important; }
+.pipe { stroke: #7f8c8d; stroke-width: 5; fill: none; }
+
+#gsvg, #lsvg { width: 100%; height: auto; background: #ffffff; border: 1px solid var(--ln); border-radius: 6px; }
+.gs { fill: #f9f9f9; stroke: var(--tx); stroke-width: 2; }
+.gs.hi { fill: #fff3e0; stroke: var(--am); }
+
+.gl { stroke: var(--tx); stroke-width: 2; }
+.gtr { stroke: var(--am); stroke-width: 4; }
+.lw { stroke: var(--ln); stroke-width: 2; fill: none; }
+.lw.hi { stroke: var(--ok); }
+
+.lc { stroke: var(--tx); stroke-width: 3; fill: none; }
+.lc.hi { stroke: var(--ok); }
+.lc.sel { stroke: var(--am); }
+
+.err { color: var(--rd); }
+textarea { width: 100%; font-family: "JetBrains Mono", ui-monospace, monospace; background: #ffffff; color: var(--tx); border-radius: 4px; }
+
+#report { display: none; }
+
+@media print {
+  body > *:not(#report) { display: none !important; }
+  body { background: #fff; color: #000; }
+  #report { display: block; font: 12px/1.4 sans-serif; color: #000; }
+  #report svg .gs, #report svg .lc, #report svg .lw, #report svg .gl, #report svg .gtr { stroke: #000 !important; fill: none !important; }
+  #report svg text { fill: #000; }
+  #report table { font-size: 11px; }
+  #report th, #report td { border-color: #000; }
+  #report h2 { page-break-after: avoid; }
+}
+
+/* ---- Ajustes Institucionales y Paneles Laterales ---- */
+.brand { display: flex; align-items: center; gap: 10px; }
+#sena { height: 40px; width: auto; }
+
+#shell { display: grid; grid-template-columns: 240px 1fr; max-width: 1700px; margin: auto; }
+
+#tree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border-right: 1px solid var(--ln);
+  background: #fafafa;
+}
+
+#tree b { color: var(--cy); margin-top: 12px; font-size: 16px; }
+#tree button { text-align: left; background: transparent; border-color: transparent; padding: 8px 12px; }
+#tree button:hover { background: #e8f5e9; color: var(--cy); border-color: var(--cy); }
+#tree button.act { border-color: var(--cy); color: #ffffff; background: var(--cy); font-weight: bold; }
+
+.st { display: flex; flex-direction: column; padding: 4px 16px; border: 2px solid; min-width: 180px; line-height: 1.2; border-radius: 4px; background: #ffffff; }
+.st small { font-size: 11px; opacity: 0.9; }
+
+.st.RUN { color: var(--ok); border-color: var(--ok); }
+.st.STOP { color: var(--am); border-color: var(--am); }
+.st.ERROR { color: var(--rd); border-color: var(--rd); animation: bl 1s steps(2) infinite; }
+.st.MNT { color: #3498db; border-color: #3498db; }
+
+@keyframes bl { 50% { opacity: 0.3; } }
+@media(prefers-reduced-motion:reduce) { .st.ERROR, .bn.blink { animation: none; } }
+
+#dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background: #ffffff;
+  border-top: 1px solid var(--ln);
+  max-height: 32vh;
+  overflow: auto;
+  padding: 10px 24px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.dt { display: flex; gap: 8px; margin-bottom: 10px; }
+.dp { display: none; }
+.dp.act { display: block; }
+.dt button { background: #f0f0f0; border: 1px solid var(--ln); color: var(--mu); }
+.dt button.act { border-color: var(--cy); color: #ffffff; background: var(--cy); }
+
+.m { padding: 6px 10px; border-left: 4px solid var(--ln); margin: 6px 0; font-size: 13px; background: #f9f9f9; border-radius: 0 4px 4px 0; }
+.m.err { border-left-color: var(--rd); }
+.m.err b, .err b { color: var(--rd); }
+.m.warn { border-left-color: var(--am); }
+.m.warn b { color: var(--am); }
+.m.ok { border-left-color: var(--ok); }
+.m.ok b, .okc { color: var(--ok); }
+.m.info { border-left-color: var(--cy); }
+.m.info b { color: var(--cy); }
+.m[data-g] { cursor: pointer; transition: background 0.2s; }
+.m[data-g]:hover { background: #eeeeee; }
+
+#cred {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 13px;
+  color: var(--mu);
+  border-top: 1px solid var(--ln);
+  background: #fafafa;
+}
+.cr { line-height: 1.7; }
+
+#dev { overflow-x: auto; margin-bottom: 16px; background: #ffffff; border: 1px solid var(--ln); border-radius: 6px; padding: 10px; }
+#dev svg { max-width: none; }
+.row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+details { margin-bottom: 10px; background: #ffffff; border: 1px solid var(--ln); padding: 8px; border-radius: 4px; }
+summary { cursor: pointer; color: var(--cy); padding: 4px 0; font-weight: bold; }
+
+.lg { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; margin: 10px 0; }
+.lg button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; font-size: 11px; background: #ffffff; border: 1px solid var(--ln); border-radius: 4px; }
+.lg button:hover { border-color: var(--cy); box-shadow: 0 2px 6px rgba(57,169,0,0.15); }
+.lg svg { width: 44px; height: 44px; stroke: var(--tx); fill: none; stroke-width: 2; }
+.lg button:hover svg { stroke: var(--cy); }
+.lg svg text { fill: var(--tx); stroke: none; font-size: 10px; }
+
+[hidden] { display: none !important; }
+
+#lib { display: block; }
+#libp { max-height: 480px; overflow: auto; margin-top: 12px; padding-right: 8px; }
+#q { width: 100%; border-radius: 20px; padding-left: 16px; }
+
+.pid { display: grid; grid-template-columns: 260px 1fr 260px; gap: 16px; }
+.tb { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; padding: 8px; background: #f5f5f5; border-radius: 6px; border: 1px solid var(--ln); }
+.tb button.on { border-color: var(--cy); color: #ffffff; background: var(--cy); }
+
+@media(max-width:1100px) {
+  .pid { grid-template-columns: 1fr; }
+  #shell { grid-template-columns: 1fr; }
+  #tree { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--ln); }
+}
+
+@media(pointer:coarse) { button, select, input { min-height: 44px; } }
+
+select.dup { border-color: var(--am); color: var(--am); font-weight: bold; }
+
+/* Tendencias */
+#trs { width: 100%; background: #ffffff; border: 1px solid var(--ln); border-radius: 6px; }
+#trsel { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 10px; }
+
+.bn { padding: 8px 12px; border: 1px solid var(--ln); margin-bottom: 10px; color: var(--tx); background: #ffffff; border-radius: 4px; font-weight: bold; }
+.bn.on { color: var(--rd); border-color: var(--rd); background: #ffebee; }
+.bn.blink { animation: bl 1s steps(2) infinite; }
+
+#hpal { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+#hpal button { text-align: left; background: #ffffff; }
+
+.rb { fill: #f9f9f9; stroke: var(--ln); }
+.rb.sel { stroke: var(--am); stroke-dasharray: 4 4; fill: #fff3e0; }
+
+.ar { display: flex; gap: 4px; margin-bottom: 4px; }
+.ar input { flex: 1; min-width: 90px; }
+.ar button { padding: 4px 8px; min-height: 0; background: #f0f0f0; border: 1px solid var(--ln); color: var(--tx); }
+.ar button:hover { background: var(--cy); color: white; border-color: var(--cy); }
+
+.tb label { display: inline-flex; gap: 6px; margin: 0; align-items: center; font-size: 13px; font-weight: bold; }
+
+.ed { display: flex; gap: 0; border: 1px solid var(--ln); border-radius: 6px; overflow: hidden; }
+.ed pre, .ed textarea { margin: 0; height: 350px; font: 14px/1.5 ui-monospace, Menlo, Consolas, monospace; padding: 10px; border: none; }
+.ed pre { color: var(--mu); text-align: right; overflow: hidden; background: #f0f0f0; border-right: 1px solid var(--ln); min-width: 40px; }
+.ed textarea { flex: 1; white-space: pre; overflow: auto; background: #ffffff; color: var(--tx); resize: none; }
+.ed textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--cy); }
+
+main, .panel, .two > *, .pid > * { min-width: 0; }
+.panel { overflow-x: auto; }
+#cv, #hcv, #trs { max-width: 100%; }
+
+/* --- FULLSCREEN API STYLES --- */
+/* Garantiza que al entrar a pantalla completa el canvas del HMI ocoepe la pantalla y mantenga el color de fondo correcto */
+#hmi:-webkit-full-screen { background: var(--bg); padding: 20px; overflow: auto; }
+#hmi:fullscreen { background: var(--bg); padding: 20px; overflow: auto; }
+
+#hcv:-webkit-full-screen { background: var(--bg); width: 100vw; height: 100vh; border: none; border-radius: 0; }
+#hcv:fullscreen { background: var(--bg); width: 100vw; height: 100vh; border: none; border-radius: 0; }
